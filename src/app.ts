@@ -1,5 +1,5 @@
 // dotenv
-require("dotenv").config()
+require('dotenv').config()
 let { PORT } = process.env
 
 // Ext modules
@@ -12,10 +12,12 @@ import { routes } from './routes'
 
 const app = express()
 
+app.use(express.json())
+
 app.listen(PORT, async () => {
     await connect()
 
-    logger.info(`Running on http://localhost:${PORT}`);
+    logger.info(`Running on http://localhost:${PORT}`)
 
     routes(app)
 })

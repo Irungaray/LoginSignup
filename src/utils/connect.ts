@@ -10,7 +10,7 @@ const connect = () => {
 
     return mongoose.connect(dbUri)
         .then(() => logger.info('Connected to DB'))
-        .catch((err:string) => {
+        .catch((err:any) => {
             logger.error('Could not connect to DB')
             process.exit(1)
         })
