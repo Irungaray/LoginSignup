@@ -29,11 +29,11 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 })
 
-userSchema.pre('save', async (next) => {
-    let user = this as unknown as UserDocument
+userSchema.pre('save', async function (next) {
+    let user = this as UserDocument
     let saltRounds:number = config.get('saltRounds')
 
-    // if (!user.isModified) return next()
+    if (!user.isModified) return next()
 
     const salt = await bcrypt.genSalt(saltRounds)
     const hash = await bcrypt.hashSync(user.password, salt)
@@ -43,8 +43,8 @@ userSchema.pre('save', async (next) => {
     return next()
 })
 
-userSchema.methods.comparePassword = async (candidatePassword: string):Promise<boolean> => {
-    let user = this as unknown as UserDocument
+userSchema.methods.comparePassword = async function (candidatePassword: string):Promise<boolean> {
+    let user = this as UserDocument
 
     return bcrypt.compare(candidatePassword, user.password)
         .catch((err:any) => {

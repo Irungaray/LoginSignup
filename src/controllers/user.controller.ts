@@ -13,6 +13,8 @@ const createUserHandler = async (
     try {
         const user = await createUser(req.body)
 
+        logger.warn(`Created user "${user.name}"`)
+
         return res.send(user)
     } catch (err: any) {
         logger.error(err)
