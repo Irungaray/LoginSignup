@@ -2,7 +2,7 @@
 import { DocumentDefinition } from "mongoose"
 
 // Int modules
-import { UserDocument, UserModel } from "../models/user/user.model"
+import { UserDocument, UserModel } from "../models/user.model"
 
 const createUser = async (
     input: DocumentDefinition<
@@ -10,10 +10,24 @@ const createUser = async (
     >
 ) => {
     try {
-        return await UserModel.create(input)
+        const user = await UserModel.create(input)
+
+        return  user
     } catch (err: any) {
         throw new Error(err)
     }
 }
 
-export { createUser }
+const validatePassword = async (
+    {email, password}:{email: string, password: string}
+) => {
+    const user = await UserModel.findOne({ email })
+    if (!user) return false
+
+    const isValid = await user.comparePassword(password)
+    if (!isValid) return false
+
+    return user.toJSON()
+}
+
+export { createUser, validatePassword }

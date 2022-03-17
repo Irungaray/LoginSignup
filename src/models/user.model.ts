@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 import config from 'config'
 
 // Int modules
-import { logger } from '../../utils/logger'
+import { logger } from '../utils/logger'
 
 interface UserDocument extends mongoose.Document {
     email: string,
@@ -53,8 +53,6 @@ userSchema.methods.comparePassword = async function (candidatePassword: string):
         })
 }
 
-// console.log(userSchema);
-
-const UserModel = mongoose.model('User', userSchema)
+const UserModel = mongoose.model<UserDocument>('User', userSchema)
 
 export { UserDocument, UserModel }
