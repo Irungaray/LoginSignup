@@ -1,6 +1,9 @@
+// Ext modules
 import jwt from 'jsonwebtoken'
 
+// Int modules
 import config from 'config'
+import { logger } from './logger'
 
 let publicKey:string = config.get('publicKey')
 let privateKey:string = config.get('privateKey')
@@ -21,10 +24,11 @@ const verifyJwt = (token: string) => {
 
         return {
             valid: true,
-            expired: true,
+            expired: false,
             decoded
         }
     } catch (err:any) {
+        logger.error(err)
         return {
             valid: false,
             expired: err.message === 'jwt expired',

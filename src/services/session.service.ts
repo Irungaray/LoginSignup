@@ -1,4 +1,8 @@
-import { SessionModel } from "../models/session.model"
+// Ext modules
+import { FilterQuery } from "mongoose"
+
+// Int modules
+import { SessionDocument, SessionModel } from "../models/session.model"
 
 const createSession = async (
     userId: string,
@@ -12,4 +16,10 @@ const createSession = async (
     return session.toJSON()
 }
 
-export { createSession }
+const findSessions = async (
+    query: FilterQuery<SessionDocument>
+) => {
+    return SessionModel.find(query).lean()
+}
+
+export { createSession, findSessions }

@@ -3,9 +3,10 @@ import { Request, Response } from "express"
 
 // Int modules
 import { validatePassword } from "../services/user.service"
-import { createSession } from "../services/session.service"
+import { createSession, findSessions } from "../services/session.service"
 
 import { signJwt } from "../utils/jwt"
+import { logger } from "../utils/logger"
 import config from 'config'
 
 let accessTokenTtl:string = config.get('accessTokenTtl')
@@ -40,14 +41,32 @@ const createUserSessionHandler = async (
             session: session._id
         },
         {
-            expiresIn: refreshTokenTtl // 15 minutes
+            expiresIn: refreshTokenTtl // 1 year
         }
     )
 
     // Return access & refresh tokens
     return res.send({
-        accessToken, refreshToken
+        message: "Succesfully logged. Here are your tokens.",
+        accessToken,
+        refreshToken
     })
 }
 
-export { createUserSessionHandler }
+const getUserSessionsHandler = async (
+    req: Request,
+    res: Response
+) => {
+    const userId = res.locals.user._id
+
+    const sessions = await findSessions({
+        user: userId,
+        valid: true
+    })
+
+    logger.warn("Retrieving sessions.")
+
+    return res.send(sessions)
+}
+
+export { createUserSessionHandler, getUserSessionsHandler }
