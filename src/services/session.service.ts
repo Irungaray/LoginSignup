@@ -7,6 +7,7 @@ import { SessionDocument, SessionModel } from "../models/session.model"
 import { findUser } from "./user.service"
 
 import { verifyJwt, signJwt } from "../utils/jwt"
+import { logger } from "../utils/logger"
 
 let accessTokenTtl:string = config.get('accessTokenTtl')
 
@@ -42,8 +43,7 @@ const reIssueAccessToken = async (
     const { decoded }:any = verifyJwt(refreshToken)
     if (!decoded || !decoded._id) return false
 
-    console.log("Decodeado:", decoded)
-    console.log("reissuing access token")
+    logger.warn(`Reissuing access token for ${decoded.name}`)
 
     const session = await SessionModel.findById(decoded.session)
     if (!session || !session.valid) return false

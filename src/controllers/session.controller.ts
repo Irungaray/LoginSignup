@@ -45,6 +45,8 @@ const createUserSessionHandler = async (
         }
     )
 
+    logger.info(`User ${user.name} loggin in.`)
+
     // Return access & refresh tokens
     return res.send({
         message: "Succesfully logged. Here are your tokens.",
@@ -57,14 +59,14 @@ const getUserSessionsHandler = async (
     req: Request,
     res: Response
 ) => {
-    const userId = res.locals.user._id
+    const {_id, name } = res.locals.user
 
     const sessions = await findSessions({
-        user: userId,
+        user: _id,
         valid: true
     })
 
-    logger.warn("Retrieving sessions.")
+    logger.warn(`Retrieving sessions for ${name}`)
 
     return res.send(sessions)
 }
@@ -73,14 +75,14 @@ const deleteSessionHandler = async (
     req: Request,
     res: Response
 ) => {
-    const sessionId = res.locals.user.session
+    const { sessionId, name } = res.locals.user
 
     await updateSession(
         { _id: sessionId },
         { valid: false }
     )
 
-    logger.warn("Loggin out.")
+    logger.info(`User ${name} loggin out.`)
 
     return res.send({
         accessToken: null,

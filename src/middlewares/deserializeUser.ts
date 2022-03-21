@@ -14,26 +14,22 @@ const deserializeUser = async (
     const accessToken = req.headers.authorization?.replace(/^Bearer\s/, "") || ""
     const refreshToken = req.headers.xrefresh || ""
 
-    console.log("refreshToken", refreshToken)
-
     if (!accessToken) {
         return next()
     }
-
-    logger.info("Has access token.")
 
     const { decoded, expired } = verifyJwt(accessToken)
 
     if (decoded) {
         res.locals.user = decoded
 
-        logger.warn("Succesful decodification.")
+        logger.warn(`Succesful decodification of ${res.locals.user.name}.`)
 
         return next()
     }
 
     if (expired && refreshToken) {
-        logger.warn("Proceeding to refresh token.")
+        // logger.warn(`Proceeding to refresh ${res.locals.user.name}'s token.`)
 
         const newAccessToken = await reIssueAccessToken(refreshToken as string)
         if (newAccessToken) res.setHeader('x-access-token', newAccessToken)
