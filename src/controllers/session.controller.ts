@@ -3,7 +3,7 @@ import { Request, Response } from "express"
 
 // Int modules
 import { validatePassword } from "../services/user.service"
-import { createSession, findSessions } from "../services/session.service"
+import { createSession, findSessions, updateSession } from "../services/session.service"
 
 import { signJwt } from "../utils/jwt"
 import { logger } from "../utils/logger"
@@ -69,4 +69,27 @@ const getUserSessionsHandler = async (
     return res.send(sessions)
 }
 
-export { createUserSessionHandler, getUserSessionsHandler }
+const deleteSessionHandler = async (
+    req: Request,
+    res: Response
+) => {
+    const sessionId = res.locals.user.session
+
+    await updateSession(
+        { _id: sessionId },
+        { valid: false }
+    )
+
+    logger.warn("Loggin out.")
+
+    return res.send({
+        accessToken: null,
+        refreshToken: null
+    })
+}
+
+export {
+    createUserSessionHandler,
+    getUserSessionsHandler,
+    deleteSessionHandler
+}

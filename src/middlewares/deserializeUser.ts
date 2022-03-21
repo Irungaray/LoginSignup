@@ -1,22 +1,26 @@
 // Ext modules
 import { Request, Response, NextFunction } from 'express'
+import { reIssueAccessToken } from '../services/session.service'
 
 // Int modules
 import { verifyJwt } from '../utils/jwt'
 import { logger } from '../utils/logger'
 
-const deserializeUser = (
+const deserializeUser = async (
     req: Request,
     res: Response,
     next: NextFunction
 ) => {
     const accessToken = req.headers.authorization?.replace(/^Bearer\s/, "") || ""
-    logger.info("Has access token.")
+    const refreshToken = req.headers.xrefresh || ""
+
+    console.log("refreshToken", refreshToken)
 
     if (!accessToken) {
-        logger.info("No token, proceeding to next.")
         return next()
     }
+
+    logger.info("Has access token.")
 
     const { decoded, expired } = verifyJwt(accessToken)
 
@@ -24,6 +28,19 @@ const deserializeUser = (
         res.locals.user = decoded
 
         logger.warn("Succesful decodification.")
+
+        return next()
+    }
+
+    if (expired && refreshToken) {
+        logger.warn("Proceeding to refresh token.")
+
+        const newAccessToken = await reIssueAccessToken(refreshToken as string)
+        if (newAccessToken) res.setHeader('x-access-token', newAccessToken)
+
+        const result = verifyJwt(newAccessToken as string)
+
+        res.locals.user = result.decoded
 
         return next()
     }

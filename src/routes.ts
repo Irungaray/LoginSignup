@@ -6,7 +6,11 @@ import { validateResource } from "./middlewares/validateResource"
 import { requireUser } from "./middlewares/requireUser"
 
 import { createUserHandler } from "./controllers/user.controller"
-import { createUserSessionHandler, getUserSessionsHandler } from "./controllers/session.controller"
+import {
+    createUserSessionHandler,
+    deleteSessionHandler,
+    getUserSessionsHandler
+} from "./controllers/session.controller"
 
 import { createUserSchema } from "./schemas/user.schema"
 import { createSessionSchema } from "./schemas/session.schema"
@@ -36,6 +40,13 @@ const routes = (app: Express) => {
         "/api/sessions",
         requireUser,
         getUserSessionsHandler
+    )
+
+    // Logout
+    app.delete(
+        "/api/sessions",
+        requireUser,
+        deleteSessionHandler
     )
 }
 

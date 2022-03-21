@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { logger } from '../utils/logger'
+// import { logger } from '../utils/logger'
 
 const requireUser = (
     req: Request,
@@ -8,10 +8,10 @@ const requireUser = (
 ) => {
     const user = res.locals.user
 
-    logger.info("User:", user.name)
-
     // FIX: Send proper message
-    if (!user) return res.sendStatus(403)
+    if (!user) return res.status(403).send("Forbidden.")
+
+    // logger.info("User:", user.name)
 
     return next()
 }

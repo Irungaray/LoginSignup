@@ -25,7 +25,7 @@ const verifyJwt = (token: string) => {
         return {
             valid: true,
             expired: false,
-            decoded
+            decoded,
         }
     } catch (err:any) {
         logger.error(err)
