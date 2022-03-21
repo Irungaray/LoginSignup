@@ -4,7 +4,6 @@ body {
     width: 100%;
     padding: 0;
     margin: 0;
-    background: #fafafa;
     font-family: "Helvetica Neue", arial, sans-serif;
     font-weight: 400;
     color: #444;
@@ -16,7 +15,7 @@ body {
     box-sizing: border-box;
 }
 
-#app {
+#root {
     height: 100%;
     text-align: center;
     background-color: #673ab8;

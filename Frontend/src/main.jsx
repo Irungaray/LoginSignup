@@ -1,5 +1,19 @@
+// Ext modules
 import { render } from 'preact'
-import { App } from './app'
+import { ThemeProvider } from '@mui/material/styles'
+
+// Int modules
+import { App } from './App'
+
+import { theme } from './styles/theme'
 import './styles/index.css'
 
-render(<App />, document.getElementById('app'))
+const Main = () => (
+    <ThemeProvider theme={theme}>
+        <App />
+    </ThemeProvider>
+)
+
+const root = document.getElementById('root')
+
+render(<Main />, root)
