@@ -1,15 +1,18 @@
 // Ext modules
 import { render } from 'preact'
-import { ThemeProvider } from '@mui/material/styles'
+import { ThemeProvider, CssBaseline } from '@mui/material'
 
 // Int modules
 import { App } from './App'
 
+// Styles
 import { theme } from './styles/theme'
 import './styles/index.css'
 
 const Main = () => (
     <ThemeProvider theme={theme}>
+        <CssBaseline />
+
         <App />
     </ThemeProvider>
 )

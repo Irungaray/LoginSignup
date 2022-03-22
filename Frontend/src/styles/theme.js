@@ -13,6 +13,9 @@ const theme = createTheme({
     secondary: {
       main: '#ffea00',
     },
+    text: {
+      primary: '#fdf8f8',
+    },
     error: {
       main: '#ff1744',
     },
@@ -22,6 +25,7 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: 'Ubuntu Mono',
+    color: '#fdf8f8',
     button: {
       fontWeight: 900,
     },
