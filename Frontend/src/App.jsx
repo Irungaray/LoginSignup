@@ -1,14 +1,17 @@
 // Ext comps
-import { Box, Typography } from "@mui/material"
+import { Box } from "@mui/material"
 
 // Int comps
-import { PasswordInput } from "./components/atoms/PasswordInput/PasswordInput"
+import { LoginForm } from "./components/molecules/LoginForm/LoginForm"
+
+import { useSx } from "./styles"
 
 const App = () => {
+    const { mainBox } = useSx()
+
     return (
-        <Box>
-            <Typography variant="h1" >Hello Vite + Preact + MUI!</Typography>
-            <PasswordInput />
+        <Box sx={mainBox}>
+            <LoginForm />
         </Box>
     )
 }
