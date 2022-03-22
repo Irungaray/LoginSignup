@@ -1,22 +1,31 @@
+// Utils & conf
+import { useFormData } from "../../../hooks/useFormData"
+
 // Ext comps
-import { Box, Link } from "@mui/material"
-import { CustomButton } from "../../atoms/CustomButton/CustomButton"
+import { Box } from "@mui/material"
 
 // Int comps
-import { Input } from "../../atoms/Input"
-import { PasswordInput } from "../../atoms/PasswordInput"
-import { Typhy } from "../../atoms/Typhy/Typhy"
+import {
+    Button,
+    Input,
+    PasswordInput,
+    Typhy,
+    Link
+} from "../../atoms"
 
 import { useSx } from "./styles"
 
 const LoginForm = () => {
-
     const { customBox } = useSx()
-
-    const handleChange = (e) => {}
+    const [ formData, setFormData ] = useFormData({
+        email: "",
+        password: ""
+    })
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        console.log(formData)
     }
 
     return (
@@ -24,18 +33,19 @@ const LoginForm = () => {
             <Typhy v="h4" text="Login" />
 
             <Input
+                name="email"
                 type="email"
                 label="Email"
                 autoFocus
-                onChange={handleChange}
+                onChange={setFormData}
             />
 
-            <PasswordInput onChange={handleChange} />
+            <PasswordInput onChange={setFormData} />
 
             <Box sx={customBox}>
-                <Link variant="body2" underline="hover" color="text" ml={2}>Register</Link>
+                <Link v="body2" text="Register" to="#" />
 
-                <CustomButton
+                <Button
                     text="Login"
                     onClick={handleSubmit}
                     variant="contained"

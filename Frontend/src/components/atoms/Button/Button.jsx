@@ -2,22 +2,22 @@
 import PropTypes from 'prop-types'
 
 // Ext comps
-import { Button } from '@mui/material'
+import { Button as MuiButton } from '@mui/material'
 
-const CustomButton = (props) => {
+const Button = (props) => {
     return (
-            <Button
+            <MuiButton
                 variant={props.variant || "outlined"}
                 disabled={props.disabled}
                 onClick={props.onClick}
                 sx={{m: 2, ...props.sx}}
             >
                 {props.text}
-            </Button>
+            </MuiButton>
     )
 }
 
-CustomButton.propTypes = {
+Button.propTypes = {
     variant: PropTypes.string,
     disabled: PropTypes.bool,
     onClick: PropTypes.func.isRequired,
@@ -25,4 +25,4 @@ CustomButton.propTypes = {
     text: PropTypes.string
 }
 
-export { CustomButton }
+export { Button }

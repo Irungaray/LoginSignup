@@ -26,6 +26,7 @@ const PasswordInput = (props) => {
                 type={showPassword ? "text" : "password"}
                 value={props.value}
                 onChange={props.onChange}
+                name="password"
                 endAdornment={
                     <InputAdornment position="end">
                         <IconButton

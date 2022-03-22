@@ -2,7 +2,7 @@
 import { Box } from "@mui/material"
 
 // Int comps
-import { LoginForm } from "./components/molecules/LoginForm/LoginForm"
+import { LoginForm } from "./components/molecules"
 
 import { useSx } from "./styles"
 
