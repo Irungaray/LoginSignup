@@ -3,17 +3,17 @@ import { render } from 'preact'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 
 // Int modules
-import { App } from './App'
+import { Router } from './src/Router'
 
 // Styles
-import { theme } from './styles/theme'
-import './styles/index.css'
+import { theme } from './src/styles/theme'
+import './src/styles/index.css'
 
 const Main = () => (
     <ThemeProvider theme={theme}>
         <CssBaseline />
 
-        <App />
+        <Router />
     </ThemeProvider>
 )
 

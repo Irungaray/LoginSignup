@@ -3,15 +3,17 @@ import PropTypes from 'prop-types'
 
 // Ext comps
 import { Link as MuiLink } from "@mui/material"
+import { Link as RouterLink } from "react-router-dom"
 
 const Link = (props) => {
     return (
         <MuiLink
+            component={RouterLink}
             to={props.to}
             onClick={props.onClick}
             variant={props.v}
             underline={props.underline || "hover"}
-            color={props.color || "text"}
+            color={props.color || "text.primary"}
             sx={{ ml: 2, cursor: "pointer", ...props.sx }}
         >
             {props.children || props.text}

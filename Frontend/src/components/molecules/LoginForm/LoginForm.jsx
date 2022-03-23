@@ -53,7 +53,7 @@ const LoginForm = () => {
             }
 
             <Box sx={customBox}>
-                <Link v="body2" text="Register" to="#" />
+                <Link v="body1" text="Register" to="/register" />
 
                 <Button
                     text="Login"
