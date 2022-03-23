@@ -1,1 +1,0 @@
-export { Typhy } from './Typhy.jsx'

@@ -1,5 +1,5 @@
 export { Button } from "./Button"
 export { Input } from "./Input"
 export { PasswordInput } from "./PasswordInput"
-export { Typhy } from "./Typhy"
+export { Text } from "./Text"
 export { Link } from "./Link"

@@ -11,7 +11,7 @@ import {
     Button,
     Input,
     PasswordInput,
-    Typhy,
+    Text,
     Link
 } from "../../atoms"
 
@@ -32,7 +32,7 @@ const LoginForm = () => {
 
     return (
         <>
-            <Typhy v="h4" text="Login" />
+            <Text v="h4" text="Login" />
 
             <Input
                 name="email"
@@ -45,11 +45,11 @@ const LoginForm = () => {
             <PasswordInput onChange={setFormData} />
 
             {loading &&
-                <Typhy v="body2" text="Loading" />
+                <Text v="body2" text="Loading" />
             }
 
             {error &&
-                <Typhy v="body2" color="error" text={error.data} />
+                <Text v="body2" color="error" text={error.data} />
             }
 
             <Box sx={customBox}>
