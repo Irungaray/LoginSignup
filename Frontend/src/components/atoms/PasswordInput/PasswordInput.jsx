@@ -16,14 +16,14 @@ const PasswordInput = (props) => {
     const [showPassword, setShowPassword] = useState(false)
 
     return (
-        <FormControl variant="outlined" sx={{ m: 2 }}>
-            <InputLabel htmlFor={`outlined-adornment-${props.name}`} color="text">
+        <FormControl variant="outlined" sx={{ m: 2, ...props.sx }}>
+            <InputLabel htmlFor={`${props.name}-id`} color="text">
                 {props.label || "Password"}
             </InputLabel>
 
             <OutlinedInput
-                // sx={{ backgroundColor: "text.primary" }}
-                id={`outlined-adornment-${props.name}`}
+                sx={props.inputSx}
+                id={`${props.name}-id`}
                 type={showPassword ? "text" : "password"}
                 value={props.value}
                 onChange={props.onChange}
@@ -52,6 +52,8 @@ const PasswordInput = (props) => {
 }
 
 PasswordInput.propTypes = {
+    sx: PropTypes.object,
+    inputSx: PropTypes.object,
     name: PropTypes.string,
     label: PropTypes.string,
     value: PropTypes.string,

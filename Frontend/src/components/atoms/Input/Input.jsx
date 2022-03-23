@@ -10,14 +10,14 @@ import {
 
 const Input = (props) => {
     return (
-        <FormControl variant="outlined" sx={{ m: 2 }}>
-            <InputLabel htmlFor={`outlined-adornment-${props.name}`} color="primary">
+        <FormControl variant="outlined" sx={{ m: 2, ...props.sx }}>
+            <InputLabel htmlFor={`${props.name}-id`} color="primary">
                 {props.label}
             </InputLabel>
 
             <OutlinedInput
-                // sx={{ backgroundColor: "text.primary" }}
-                id={`outlined-adornment-${props.name}`}
+                sx={props.inputSx}
+                id={`${props.name}-id`}
                 type={props.type || "text"}
                 value={props.value}
                 onChange={props.onChange}
@@ -31,6 +31,8 @@ const Input = (props) => {
 
 Input.propTypes = {
     label: PropTypes.string.isRequired,
+    sx: PropTypes.object,
+    inputSx: PropTypes.object,
     type: PropTypes.string,
     value: PropTypes.oneOfType([
         PropTypes.string,
