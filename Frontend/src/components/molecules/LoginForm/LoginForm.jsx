@@ -1,5 +1,6 @@
 // Utils & conf
-import { useFormData } from "../../../hooks/useFormData"
+import { useFormData, useRequest } from "../../../hooks"
+
 import { login } from "../../../helpers/requests/auth"
 
 // Ext comps
@@ -19,19 +20,13 @@ import { useSx } from "./styles"
 const LoginForm = () => {
     const { customBox } = useSx()
     const [ formData, setFormData ] = useFormData({
-        email: "",
-        password: ""
+        email: "vamoave@asd.com",
+        password: "pasdsadasd12342a"
     })
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        const { email, password } = formData
-
-        const res = await login(email, password)
-
-        if (res.status === 200) console.log("Successful request")
-        else console.log(res)
-    }
+    const [ handleSubmit ] = useRequest(
+        () => login(formData.email, formData.password)
+    )
 
     return (
         <>
