@@ -1,6 +1,6 @@
 // Utils & conf
 import { useFormData, useRequest } from "../../../hooks"
-
+import { validateLogin } from "../../../helpers/utils/validateLogin"
 import { login } from "../../../helpers/requests/auth"
 
 // Ext comps
@@ -20,15 +20,19 @@ import { useSx } from "./styles"
 const LoginForm = () => {
     const { customBox } = useSx()
     const [ formData, setFormData ] = useFormData({
-        email: "vamoave@asd.com",
-        password: "pasdsadasd12342a"
+        email: "",
+        password: ""
     })
 
-    const [ handleLoginReq, data, error, loading ] = useRequest(
-        () => login(formData.email, formData.password),
+    const { email, password } = formData
+
+    const [ handleLoginReq, loading, data, error, setError ] = useRequest(
+        () => login(email, password),
         () => console.log("Te logeaste capo"),
-        () => console.log("Error capo", error.data)
+        () => console.log("Error capo", error)
     )
+
+    const disabled = validateLogin(email, password)
 
     return (
         <>
@@ -44,12 +48,8 @@ const LoginForm = () => {
 
             <PasswordInput onChange={setFormData} />
 
-            {loading &&
-                <Text v="body2" text="Loading" />
-            }
-
             {error &&
-                <Text v="body2" color="error" text={error.data} />
+                <Text v="body2" color="error" text={error} />
             }
 
             <Box sx={customBox}>
@@ -57,6 +57,8 @@ const LoginForm = () => {
 
                 <Button
                     text="Login"
+                    disabled={disabled}
+                    loading={loading}
                     onClick={handleLoginReq}
                     variant="contained"
                     sx={{ width: 100 }}
