@@ -1,5 +1,6 @@
 // Utils & conf
 import { useFormData } from "../../../hooks/useFormData"
+import { login } from "../../../helpers/requests/auth"
 
 // Ext comps
 import { Box } from "@mui/material"
@@ -22,10 +23,14 @@ const LoginForm = () => {
         password: ""
     })
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        const { email, password } = formData
 
-        console.log(formData)
+        const res = await login(email, password)
+
+        if (res.status === 200) console.log("Successful request")
+        else console.log(res)
     }
 
     return (
