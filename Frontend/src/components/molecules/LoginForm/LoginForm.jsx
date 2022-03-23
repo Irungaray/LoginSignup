@@ -3,9 +3,6 @@ import { useFormData, useRequest } from "../../../hooks"
 import { validateLogin } from "../../../helpers/utils/validateLogin"
 import { login } from "../../../helpers/requests/auth"
 
-// Ext comps
-import { Box } from "@mui/material"
-
 // Int comps
 import {
     Button,
@@ -14,11 +11,9 @@ import {
     Text,
     Link
 } from "../../atoms"
-
-import { useSx } from "./styles"
+import { CustomStack } from "../../containers/"
 
 const LoginForm = () => {
-    const { customBox } = useSx()
     const [ formData, setFormData ] = useFormData({
         email: "",
         password: ""
@@ -49,10 +44,10 @@ const LoginForm = () => {
             <PasswordInput onChange={setFormData} />
 
             {error &&
-                <Text v="body2" color="error" text={error} />
+                <Text v="h6" color="error" text={error} />
             }
 
-            <Box sx={customBox}>
+            <CustomStack>
                 <Link v="body1" text="Register" to="/register" />
 
                 <Button
@@ -63,7 +58,7 @@ const LoginForm = () => {
                     variant="contained"
                     sx={{ width: 100 }}
                 />
-            </Box>
+            </CustomStack>
         </>
     )
 }

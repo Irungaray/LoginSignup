@@ -17,16 +17,17 @@ const PasswordInput = (props) => {
 
     return (
         <FormControl variant="outlined" sx={{ m: 2 }}>
-            <InputLabel htmlFor="outlined-adornment-password" color="text">
+            <InputLabel htmlFor={`outlined-adornment-${props.name}`} color="text">
                 {props.label || "Password"}
             </InputLabel>
+
             <OutlinedInput
                 // sx={{ backgroundColor: "text.primary" }}
-                id="outlined-adornment-password"
+                id={`outlined-adornment-${props.name}`}
                 type={showPassword ? "text" : "password"}
                 value={props.value}
                 onChange={props.onChange}
-                name="password"
+                name={props.name || "password"}
                 endAdornment={
                     <InputAdornment position="end">
                         <IconButton
@@ -44,13 +45,14 @@ const PasswordInput = (props) => {
                         </IconButton>
                     </InputAdornment>
                 }
-                label="Password"
+                label={props.label || "Password"}
             />
         </FormControl>
     )
 }
 
 PasswordInput.propTypes = {
+    name: PropTypes.string,
     label: PropTypes.string,
     value: PropTypes.string,
     onChange: PropTypes.func.isRequired

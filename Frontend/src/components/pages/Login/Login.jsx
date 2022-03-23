@@ -1,6 +1,6 @@
 // Internal components
-import { CustomBox } from "../../containers/CustomBox/CustomBox";
-import { LoginForm } from "../../molecules/LoginForm/LoginForm";
+import { CustomBox } from "../../containers";
+import { LoginForm } from "../../molecules";
 
 const Login = () => {
     return (

@@ -1,5 +1,5 @@
 // Int comps
-import { Login, Register, NotFound } from "./components/pages"
+import { Login, Signup, NotFound } from "./components/pages"
 
 // Ext comps
 import { BrowserRouter, Routes, Route } from "react-router-dom"
@@ -10,7 +10,7 @@ const Router = () => {
             <Routes>
                 <Route path="/" element={<Login />} />
 
-                <Route path="/register" element={<Register />} />
+                <Route path="/signup" element={<Signup />} />
 
                 <Route path="*" element={ <NotFound /> } />
             </Routes>

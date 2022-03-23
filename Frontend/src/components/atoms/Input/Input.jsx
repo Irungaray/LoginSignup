@@ -11,12 +11,13 @@ import {
 const Input = (props) => {
     return (
         <FormControl variant="outlined" sx={{ m: 2 }}>
-            <InputLabel htmlFor="outlined-adornment" color="primary">
+            <InputLabel htmlFor={`outlined-adornment-${props.name}`} color="primary">
                 {props.label}
             </InputLabel>
+
             <OutlinedInput
                 // sx={{ backgroundColor: "text.primary" }}
-                id="outlined-adornment"
+                id={`outlined-adornment-${props.name}`}
                 type={props.type || "text"}
                 value={props.value}
                 onChange={props.onChange}
