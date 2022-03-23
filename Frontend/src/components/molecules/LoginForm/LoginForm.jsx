@@ -24,8 +24,10 @@ const LoginForm = () => {
         password: "pasdsadasd12342a"
     })
 
-    const [ handleSubmit ] = useRequest(
-        () => login(formData.email, formData.password)
+    const [ handleLoginReq, data, error, loading ] = useRequest(
+        () => login(formData.email, formData.password),
+        () => console.log("Te logeaste capo"),
+        () => console.log("Error capo", error.data)
     )
 
     return (
@@ -42,12 +44,20 @@ const LoginForm = () => {
 
             <PasswordInput onChange={setFormData} />
 
+            {loading &&
+                <Typhy v="body2" text="Loading" />
+            }
+
+            {error &&
+                <Typhy v="body2" color="error" text={error.data} />
+            }
+
             <Box sx={customBox}>
                 <Link v="body2" text="Register" to="#" />
 
                 <Button
                     text="Login"
-                    onClick={handleSubmit}
+                    onClick={handleLoginReq}
                     variant="contained"
                     sx={{ width: 100 }}
                 />

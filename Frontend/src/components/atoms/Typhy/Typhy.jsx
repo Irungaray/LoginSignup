@@ -6,7 +6,7 @@ import { Typography } from "@mui/material"
 
 const Typhy = (props) => {
     return (
-        <Typography variant={props.v} sx={{ ml: 2, ...props.sx }}>
+        <Typography variant={props.v} color={props.color} sx={{ ml: 2, ...props.sx }}>
             {props.children || props.text}
         </Typography>
     )
@@ -14,6 +14,7 @@ const Typhy = (props) => {
 
 Typhy.propTypes = {
     v: PropTypes.string,
+    color: PropTypes.string,
     sx: PropTypes.object,
     text: PropTypes.string,
     children: PropTypes.string
