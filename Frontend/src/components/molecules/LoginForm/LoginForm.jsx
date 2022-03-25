@@ -15,8 +15,8 @@ import { CustomStack } from "../../containers/"
 
 const LoginForm = () => {
     const [ formData, setFormData ] = useFormData({
-        email: "",
-        password: ""
+        email: "test@test.com",
+        password: "testpass"
     })
 
     const { email, password } = formData
@@ -34,6 +34,7 @@ const LoginForm = () => {
             <Text v="h4" text="Login" />
 
             <Input
+                value={email}
                 name="email"
                 type="email"
                 label="Email"
@@ -41,7 +42,7 @@ const LoginForm = () => {
                 onChange={setFormData}
             />
 
-            <PasswordInput onChange={setFormData} />
+            <PasswordInput value={password} onChange={setFormData} />
 
             {error &&
                 <Text v="h6" color="error" text={error} />

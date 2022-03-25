@@ -13,7 +13,7 @@ const CustomStack = (props) => {
 };
 
 CustomStack.propTypes = {
-    children: PropTypes.element
+    children: PropTypes.arrayOf(PropTypes.element)
 }
 
 export { CustomStack }

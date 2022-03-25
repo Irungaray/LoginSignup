@@ -12,7 +12,7 @@ const useRequest = (request, onSuccess, onError) => {
         const res = await request()
 
         if (res.status === 200) setData(res), setError(null)
-        else setError(res.response.data), setData(null)
+        else setError(res.response), setData(null)
 
         setLoading(false)
     }
