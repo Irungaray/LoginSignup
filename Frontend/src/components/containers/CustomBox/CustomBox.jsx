@@ -11,7 +11,7 @@ const CustomBox = (props) => {
     const { mainBox } = useSx()
 
     return (
-        <Box sx={mainBox}>
+        <Box sx={mainBox} component="form">
             {props.children}
         </Box>
     )
