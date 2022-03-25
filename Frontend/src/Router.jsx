@@ -1,21 +1,22 @@
 // Int comps
 import { Login, Signup, NotFound, Home } from "./components/pages"
+import { PublicRoute, ProtectedRoute } from "./helpers/routes"
 
 // Ext comps
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Switch } from "react-router-dom"
 
 const Router = () => {
     return (
         <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Login />} />
+            <Switch>
+                <PublicRoute exact path="/" component={<Login />} />
 
-                <Route path="/signup" element={<Signup />} />
+                <PublicRoute exact path="/signup" component={<Signup />} />
 
-                <Route path="/home" element={<Home />} />
+                <PublicRoute exact path="/home" component={<Home />} />
 
-                <Route path="*" element={ <NotFound /> } />
-            </Routes>
+                <PublicRoute exact path="*" component={ <NotFound /> } />
+            </Switch>
         </BrowserRouter>
     )
 }
