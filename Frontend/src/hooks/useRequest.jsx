@@ -7,7 +7,7 @@ const useRequest = (request, onSuccess, onError) => {
 
     const handleRequest = async (e) => {
         setLoading(true)
-        e.preventDefault()
+        if (e) e.preventDefault()
 
         const res = await request()
 

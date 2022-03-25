@@ -1,13 +1,28 @@
-import PropTypes from 'prop-types'
+// Utils & conf
+import { useFormData, useRequest } from "../../../hooks"
+import { getActiveSessions } from "../../../helpers/requests/misc"
+import { useEffect } from "preact/hooks"
 
 const Home = () => {
-    return (
-        "You should only view this if logged in."
+    const [ handleActiveSessionsReq, loading, data, error ] = useRequest(
+        () => getActiveSessions(),
+        () => console.log("Exito", data),
+        () => console.log("Error capo", error)
     )
-}
 
-Home.propTypes = {
+    useEffect(() => {
+        handleActiveSessionsReq()
+    }, [])
 
+    return (
+        <>
+            {loading && "Loading"}
+
+            {data && JSON.stringify(data)}
+
+            Please login
+        </>
+    )
 }
 
 export { Home }
