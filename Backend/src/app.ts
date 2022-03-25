@@ -5,6 +5,7 @@ let { PORT, clientUri } = process.env
 // Ext modules
 import express from 'express'
 import cors  from 'cors'
+import cookieParser  from 'cookie-parser'
 
 // Int modules
 import { deserializeUser } from './middlewares/deserializeUser'
@@ -18,7 +19,13 @@ logger.warn("BACKEND")
 const app = express()
 
 app.use(express.json())
-app.use(cors({ origin: clientUri }))
+app.use(
+    cors({
+        credentials: true,
+        origin: clientUri
+    })
+)
+app.use(cookieParser())
 
 app.use(deserializeUser)
 

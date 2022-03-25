@@ -11,6 +11,10 @@ import config from 'config'
 
 let accessTokenTtl:string = config.get('accessTokenTtl')
 let refreshTokenTtl:string = config.get('refreshTokenTtl')
+let clientDomain:string = config.get('clientDomain')
+let secureCookie:boolean = config.get('secureCookie')
+let cookieAccessTokenTtl:number = config.get('cookieAccessTokenTtl')
+let cookieRefreshTokenTtl:number = config.get('cookieRefreshTokenTtl')
 
 const createUserSessionHandler = async (
     req: Request,
@@ -48,6 +52,26 @@ const createUserSessionHandler = async (
     logger.info(`User ${user.name} loggin in.`)
 
     // Return access & refresh tokens
+    res.cookie("accessToken", accessToken, {
+        maxAge: cookieAccessTokenTtl, // 15 minutes
+        domain: clientDomain,
+        path: "/",
+        sameSite: "strict",
+        // On prod, change .env to true
+        httpOnly: secureCookie,
+        secure: secureCookie
+    })
+
+    res.cookie("refreshToken", refreshToken, {
+        maxAge: cookieRefreshTokenTtl, // 1 year
+        domain: clientDomain,
+        path: "/",
+        sameSite: "strict",
+        // On prod, change .env to true
+        httpOnly: secureCookie,
+        secure: secureCookie
+    })
+
     return res.send({
         message: "Succesfully logged. Here are your tokens.",
         accessToken,

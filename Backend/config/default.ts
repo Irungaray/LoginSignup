@@ -7,6 +7,10 @@ let {
     privateKey,
     accessTokenTtl,
     refreshTokenTtl,
+    clientDomain,
+    secureCookie,
+    cookieAccessTokenTtl,
+    cookieRefreshTokenTtl
 } = process.env
 
 export default {
@@ -15,5 +19,9 @@ export default {
     publicKey,
     privateKey,
     accessTokenTtl,
-    refreshTokenTtl
+    refreshTokenTtl,
+    clientDomain,
+    secureCookie,
+    cookieAccessTokenTtl,
+    cookieRefreshTokenTtl
 }
