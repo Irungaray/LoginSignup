@@ -35,17 +35,18 @@ const routes = (app: Express) => {
         createUserSessionHandler
     )
 
+    // Following routes requires authorization
+    app.use(requireUser)
+
     // Active sessions
     app.get(
         "/api/sessions",
-        requireUser,
         getUserSessionsHandler
     )
 
     // Logout
     app.delete(
         "/api/sessions",
-        requireUser,
         deleteSessionHandler
     )
 }

@@ -1,5 +1,5 @@
 // Ext modules
-import { Request, Response } from "express"
+import { Request, Response, CookieOptions } from "express"
 
 // Int modules
 import { validatePassword } from "../services/user.service"
@@ -15,6 +15,21 @@ let clientDomain:string = config.get('clientDomain')
 let secureCookie:boolean = config.get('secureCookie')
 let cookieAccessTokenTtl:number = config.get('cookieAccessTokenTtl')
 let cookieRefreshTokenTtl:number = config.get('cookieRefreshTokenTtl')
+
+const accessTokenCookieOptions:CookieOptions = {
+    maxAge: cookieAccessTokenTtl, // 15 minutes
+    domain: clientDomain,
+    path: "/",
+    sameSite: "strict",
+    // On prod, change .env to true
+    httpOnly: secureCookie,
+    secure: secureCookie
+}
+
+const refreshTokenCookieOptions:CookieOptions = {
+    ...accessTokenCookieOptions,
+    maxAge: cookieRefreshTokenTtl // 1 year
+}
 
 const createUserSessionHandler = async (
     req: Request,
@@ -52,25 +67,9 @@ const createUserSessionHandler = async (
     logger.info(`User ${user.name} loggin in.`)
 
     // Return access & refresh tokens
-    res.cookie("accessToken", accessToken, {
-        maxAge: cookieAccessTokenTtl, // 15 minutes
-        domain: clientDomain,
-        path: "/",
-        sameSite: "strict",
-        // On prod, change .env to true
-        httpOnly: secureCookie,
-        secure: secureCookie
-    })
+    res.cookie("accessToken", accessToken, accessTokenCookieOptions)
 
-    res.cookie("refreshToken", refreshToken, {
-        maxAge: cookieRefreshTokenTtl, // 1 year
-        domain: clientDomain,
-        path: "/",
-        sameSite: "strict",
-        // On prod, change .env to true
-        httpOnly: secureCookie,
-        secure: secureCookie
-    })
+    res.cookie("refreshToken", refreshToken, refreshTokenCookieOptions)
 
     return res.send({
         message: "Succesfully logged. Here are your tokens.",

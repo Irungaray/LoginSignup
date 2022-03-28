@@ -19,12 +19,12 @@ const deserializeUser = async (
     const accessToken = req.cookies?.accessToken || req.headers.authorization?.replace(/^Bearer\s/, "") || ""
     const refreshToken = req.cookies?.refreshToken || req.headers.xrefresh || ""
 
-    if (!accessToken) {
+    if (!accessToken && !refreshToken) {
         logger.warn(`Unauthorized request from ${req.headers['user-agent']}`)
         return next()
     }
 
-    const { decoded, expired } = verifyJwt(accessToken)
+    const { decoded, expired } = verifyJwt(refreshToken)
 
     if (decoded) {
         res.locals.user = decoded
@@ -35,7 +35,7 @@ const deserializeUser = async (
     }
 
     if (expired && refreshToken) {
-        // logger.warn(`Proceeding to refresh ${res.locals.user.name}'s token.`)
+        logger.warn(`Proceeding to refresh ${res.locals.user.name}'s token.`)
 
         const newAccessToken = await reIssueAccessToken(refreshToken as string)
 
