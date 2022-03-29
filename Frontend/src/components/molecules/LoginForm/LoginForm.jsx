@@ -1,40 +1,34 @@
 // Utils & conf
-import {  } from "react-router-dom";
+import { useContext } from "preact/hooks"
+import { Redirect } from "react-router-dom";
+
+// Int modules
 import { useFormData, useRequest } from "../../../hooks"
+import { SessionContext } from "../../../context/SessionContext"
 import { validateLogin } from "../../../helpers/utils/validateLogin"
 import { login } from "../../../helpers/requests/auth"
 
 // Int comps
-import {
-    Button,
-    Input,
-    PasswordInput,
-    Text,
-    Link
-} from "../../atoms"
+import { Button, Input, PasswordInput, Text, Link } from "../../atoms"
 import { CustomStack } from "../../containers/"
 
 const LoginForm = () => {
+    const { isLogged, setIsLogged } = useContext(SessionContext);
+
     const [ formData, setFormData ] = useFormData({
         email: "test@test.com",
         password: "testpass"
     })
-
     const { email, password } = formData
-
-    const handleLogin = () => {
-
-        console.log("Te logeaste capo")
-
-    }
+    const disabled = validateLogin(email, password)
 
     const [ handleLoginReq, loading, data, error, setError ] = useRequest(
         () => login(email, password),
-        () => handleLogin(),
+        () => setIsLogged(true),
         () => console.log("Error capo", error)
     )
 
-    const disabled = validateLogin(email, password)
+    if (isLogged) return <Redirect to="/home" />
 
     return (
         <>

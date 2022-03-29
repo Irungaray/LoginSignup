@@ -38,3 +38,17 @@ export const signup = async (email, password, passwordConfirmation, name) => {
         return err
     }
 }
+
+export const refreshSession = async () => {
+    try {
+        const res = await Axios({
+            method: 'GET',
+            url: `${apiUri}/refresh`,
+            withCredentials: true
+        })
+
+        return res
+    } catch (err) {
+        return err
+    }
+}

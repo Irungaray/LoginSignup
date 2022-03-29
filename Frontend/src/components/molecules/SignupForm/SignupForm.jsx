@@ -1,5 +1,10 @@
 // Utils & conf
+import { useContext } from "preact/hooks"
+import { Redirect } from "react-router-dom";
+
+// Int modules
 import { useFormData, useRequest } from "../../../hooks"
+import { SessionContext } from "../../../context/SessionContext"
 import { validateSignup } from "../../../helpers/utils/validateSignup"
 import { signup } from "../../../helpers/requests/auth"
 
@@ -8,14 +13,16 @@ import { Button, Input, PasswordInput, Text, Link } from "../../atoms"
 import { CustomStack } from "../../containers"
 
 const SignupForm = () => {
+    const { isLogged, setIsLogged } = useContext(SessionContext);
+
     const [formData, setFormData] = useFormData({
         email: "",
         password: "",
         passwordConfirmation: "",
         name: "",
     })
-
     const { email, password, passwordConfirmation, name } = formData
+    const disabled = validateSignup(email, password, passwordConfirmation, name)
 
     const [handleSignupReq, loading, data, error, setError] = useRequest(
         () => signup(email, password, passwordConfirmation, name),
@@ -23,7 +30,10 @@ const SignupForm = () => {
         () => console.log("Error on signup", error)
     )
 
-    const disabled = validateSignup(email, password, passwordConfirmation, name)
+    if (isLogged) return <Text
+        v="h4"
+        text="You are already logged in. Please, logout in order to register."
+    />
 
     return (
         <>

@@ -1,7 +1,12 @@
 // Ext comps
 import { Route, Redirect } from "react-router-dom"
 
-const ProtectedRoute = ({ isLogged, component: Component, ...rest }) => {
+import { useContext } from "preact/hooks"
+import { SessionContext } from "../../context/SessionContext";
+
+const ProtectedRoute = ({ component: Component, ...rest }) => {
+    const { isLogged, setIsLogged } = useContext(SessionContext);
+
     return (
         <Route
             {...rest}
