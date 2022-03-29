@@ -78,6 +78,17 @@ const createUserSessionHandler = async (
     })
 }
 
+const refreshUserSessionHandler = async (
+    req: Request,
+    res: Response
+) => {
+    const { name } = res.locals.user
+
+    logger.warn(`Refreshing session for ${name}`)
+
+    return res.send("Session refreshed")
+}
+
 const getUserSessionsHandler = async (
     req: Request,
     res: Response
@@ -115,6 +126,7 @@ const deleteSessionHandler = async (
 
 export {
     createUserSessionHandler,
+    refreshUserSessionHandler,
     getUserSessionsHandler,
     deleteSessionHandler
 }

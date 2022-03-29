@@ -8,6 +8,7 @@ import { requireUser } from "./middlewares/requireUser"
 import { createUserHandler } from "./controllers/user.controller"
 import {
     createUserSessionHandler,
+    refreshUserSessionHandler,
     deleteSessionHandler,
     getUserSessionsHandler
 } from "./controllers/session.controller"
@@ -35,8 +36,16 @@ const routes = (app: Express) => {
         createUserSessionHandler
     )
 
-    // Following routes requires authorization
+    // Following routes require authorization
     app.use(requireUser)
+
+    // Refresh session
+    // Probably this aproach isnt the best one
+    // FIX
+    app.get(
+        "/api/refresh",
+        refreshUserSessionHandler
+    )
 
     // Active sessions
     app.get(
