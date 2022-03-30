@@ -5,6 +5,7 @@ export const useSx = () => {
             display: "flex",
             flexDirection: "column",
             mx: "auto",
+            mt: 30,
             p: 2,
             width: 600,
             borderRadius: 1.5
