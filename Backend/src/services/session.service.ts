@@ -36,6 +36,12 @@ const updateSession = async (
     return SessionModel.updateOne(query, update)
 }
 
+const deleteSessions = async (
+    query: FilterQuery<SessionDocument>
+) => {
+    return SessionModel.deleteMany(query)
+}
+
 const reIssueAccessToken = async (
     refreshToken: string
 ) => {
@@ -68,5 +74,6 @@ export {
     createSession,
     findSessions,
     updateSession,
+    deleteSessions,
     reIssueAccessToken
 }

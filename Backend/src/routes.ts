@@ -10,7 +10,8 @@ import {
     createUserSessionHandler,
     refreshUserSessionHandler,
     deleteSessionHandler,
-    getUserSessionsHandler
+    getUserSessionsHandler,
+    deleteAllSessionsHandler
 } from "./controllers/session.controller"
 
 import { createUserSchema } from "./schemas/user.schema"
@@ -57,6 +58,12 @@ const routes = (app: Express) => {
     app.delete(
         "/api/sessions",
         deleteSessionHandler
+    )
+
+    // Delete all sessions
+    app.delete(
+        "/api/sessions/all",
+        deleteAllSessionsHandler
     )
 }
 

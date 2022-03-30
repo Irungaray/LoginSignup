@@ -3,7 +3,7 @@ import { Request, Response, CookieOptions } from "express"
 
 // Int modules
 import { validatePassword } from "../services/user.service"
-import { createSession, findSessions, updateSession } from "../services/session.service"
+import { createSession, deleteSessions, findSessions, updateSession } from "../services/session.service"
 
 import { signJwt } from "../utils/jwt"
 import { logger } from "../utils/logger"
@@ -105,6 +105,19 @@ const getUserSessionsHandler = async (
     return res.send(sessions)
 }
 
+const deleteAllSessionsHandler = async (
+    req: Request,
+    res: Response
+) => {
+    const sessions = await deleteSessions({
+        valid: true
+    })
+
+    logger.warn("Deleting all active sessions.")
+
+    return res.send(sessions)
+}
+
 const deleteSessionHandler = async (
     req: Request,
     res: Response
@@ -128,5 +141,6 @@ export {
     createUserSessionHandler,
     refreshUserSessionHandler,
     getUserSessionsHandler,
-    deleteSessionHandler
+    deleteSessionHandler,
+    deleteAllSessionsHandler
 }
