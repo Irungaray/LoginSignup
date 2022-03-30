@@ -1,6 +1,6 @@
 import { useState, useEffect } from "preact/hooks";
 
-const useRequest = (request, onSuccess, onError) => {
+const useRequest = (request, onSuccess=(_ => _), onError=(_ => _)) => {
     const [ loading, setLoading ] = useState(false)
     const [ data, setData ] = useState(null)
     const [ error, setError ] = useState(null)
