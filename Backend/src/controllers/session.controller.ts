@@ -3,7 +3,7 @@ import { Request, Response, CookieOptions } from "express"
 
 // Int modules
 import { validatePassword } from "../services/user.service"
-import { createSession, deleteSessions, findSessions, updateSession } from "../services/session.service"
+import { createSession, deleteAllSessions, deleteSession, findSessions } from "../services/session.service"
 
 import { signJwt } from "../utils/jwt"
 import { logger } from "../utils/logger"
@@ -68,7 +68,6 @@ const createUserSessionHandler = async (
 
     // Return access & refresh tokens
     res.cookie("accessToken", accessToken, accessTokenCookieOptions)
-
     res.cookie("refreshToken", refreshToken, refreshTokenCookieOptions)
 
     return res.send({
@@ -96,7 +95,7 @@ const getUserSessionsHandler = async (
     const {_id, name } = res.locals.user
 
     const sessions = await findSessions({
-        user: _id,
+        // user: _id,
         valid: true
     })
 
@@ -109,7 +108,7 @@ const deleteAllSessionsHandler = async (
     req: Request,
     res: Response
 ) => {
-    const sessions = await deleteSessions({
+    const sessions = await deleteAllSessions({
         valid: true
     })
 
@@ -124,16 +123,15 @@ const deleteSessionHandler = async (
 ) => {
     const { sessionId, name } = res.locals.user
 
-    await updateSession(
-        { _id: sessionId },
-        { valid: false }
-    )
+    await deleteSession(sessionId)
 
     logger.info(`User ${name} loggin out.`)
 
+    res.cookie("accessToken", "")
+    res.cookie("refreshToken", "")
+
     return res.send({
-        accessToken: null,
-        refreshToken: null
+        message: "Logged out"
     })
 }
 

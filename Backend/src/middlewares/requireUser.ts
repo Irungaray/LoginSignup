@@ -8,6 +8,8 @@ const requireUser = (
 ) => {
     const user = res.locals.user
 
+    console.log(res.locals)
+
     // FIX: Send proper message
     if (!user) return res.status(403).send("Forbidden.")
 

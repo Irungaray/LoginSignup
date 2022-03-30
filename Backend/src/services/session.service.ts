@@ -29,6 +29,7 @@ const findSessions = async (
     return SessionModel.find(query).lean()
 }
 
+// delete this
 const updateSession = async (
     query: FilterQuery<SessionDocument>,
     update: UpdateQuery<SessionDocument>
@@ -36,7 +37,13 @@ const updateSession = async (
     return SessionModel.updateOne(query, update)
 }
 
-const deleteSessions = async (
+const deleteSession = async (
+    query: FilterQuery<SessionDocument>
+) => {
+    return SessionModel.deleteOne(query)
+}
+
+const deleteAllSessions = async (
     query: FilterQuery<SessionDocument>
 ) => {
     return SessionModel.deleteMany(query)
@@ -74,6 +81,7 @@ export {
     createSession,
     findSessions,
     updateSession,
-    deleteSessions,
+    deleteSession,
+    deleteAllSessions,
     reIssueAccessToken
 }
