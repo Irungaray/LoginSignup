@@ -20,7 +20,7 @@ const CustomBox = (props) => {
 CustomBox.propTypes = {
     children: PropTypes.oneOfType([
         PropTypes.element,
-        PropTypes.arrayOf(PropTypes.element)
+        PropTypes.array
     ])
 }
 
