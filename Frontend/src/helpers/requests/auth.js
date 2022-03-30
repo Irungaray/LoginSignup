@@ -52,3 +52,18 @@ export const refreshSession = async () => {
         return err
     }
 }
+
+export const logout = async () => {
+    try {
+        const res = await Axios({
+            method: 'DELETE',
+            url: `${apiUri}/sessions`,
+            withCredentials: true
+        })
+
+        return res
+    } catch (err) {
+        return err
+    }
+}
+
