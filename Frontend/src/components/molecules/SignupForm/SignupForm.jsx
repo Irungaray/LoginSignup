@@ -6,7 +6,7 @@ import { Redirect } from "react-router-dom";
 import { useFormData, useRequest } from "../../../hooks"
 import { SessionContext } from "../../../context/SessionContext"
 import { validateSignup } from "../../../helpers/utils/validateSignup"
-import { signup } from "../../../helpers/requests/auth"
+import { signup, login } from "../../../helpers/requests/auth"
 
 // Int comps
 import { Button, Input, PasswordInput, Text, Link } from "../../atoms"
@@ -24,16 +24,37 @@ const SignupForm = () => {
     const { email, password, passwordConfirmation, name } = formData
     const disabled = validateSignup(email, password, passwordConfirmation, name)
 
-    const [handleSignupReq, loading, data, error, setError] = useRequest(
+    const [handleSignupReq, signupLoading, signupRes, signupErr] = useRequest(
         () => signup(email, password, passwordConfirmation, name),
-        () => console.log("Succesfully signup"),
-        () => console.log("Error on signup", error)
+        () => handleSuccesfulSignup(),
+        () => console.log("Error on signup", signupErr)
     )
 
-    if (isLogged) return <Text
-        v="h4"
-        text="You are already logged in. Please, logout in order to register."
-    />
+    const [handleLoginReq, loginLoading, loginRes, loginErr] = useRequest(
+        () => login(email, password),
+        () => handleSuccesfulLogin(),
+        () => console.log("Error on login", loginErr)
+    )
+
+    const handleSuccesfulSignup = () => {
+        console.log("Successful signup", signupRes)
+        handleLoginReq()
+    }
+
+    const handleSuccesfulLogin = () => {
+        console.log("Successful login", loginRes)
+        setIsLogged(true)
+    }
+
+    if (isLogged) return <Redirect to="/home" />
+
+    // Fix: This could be a warning toast
+    // if (isLogged) return (
+    //     <>
+    //         <Text v="h4" text="You are already logged in." />
+    //         <Text v="h4" text="Please, logout in order to register." sx={{ mt: 2 }} />
+    //     </>
+    // )
 
     return (
         <>
@@ -56,7 +77,6 @@ const SignupForm = () => {
                 name="email"
                 type="email"
                 label="Email"
-                autoFocus
                 onChange={setFormData}
             />
 
@@ -71,7 +91,14 @@ const SignupForm = () => {
                 onChange={setFormData}
             />
 
-            {error && <Text v="h6" color="error" text={error} />}
+            {signupErr && signupErr.data.map((err) => (
+                <Text v="h6" color="error" text={err.message} />
+            ))}
+
+            {loginErr &&
+                <Text v="h6" color="error" text={loginErr.data} />
+            }
+
 
             <CustomStack>
                 <Link v="body1" text="Login" to="/" />
@@ -79,7 +106,7 @@ const SignupForm = () => {
                 <Button
                     text="Register"
                     disabled={disabled}
-                    loading={loading}
+                    loading={signupLoading}
                     onClick={handleSignupReq}
                     variant="contained"
                     sx={{ width: 100 }}

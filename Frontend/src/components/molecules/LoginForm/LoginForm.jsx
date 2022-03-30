@@ -46,11 +46,11 @@ const LoginForm = () => {
             <PasswordInput value={password} onChange={setFormData} />
 
             {error &&
-                <Text v="h6" color="error" text={error} />
+                <Text v="h6" color="error" text={error.data} />
             }
 
             <CustomStack>
-                <Link v="body1" text="Register" to="/register" />
+                <Link v="body1" text="Register" to="/signup" />
 
                 <Button
                     text="Login"
