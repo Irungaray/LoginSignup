@@ -13,10 +13,12 @@ let accessTokenTtl:string = config.get('accessTokenTtl')
 
 const createSession = async (
     userId: string,
+    userName: string,
     userAgent: string
 ) => {
     const session = await SessionModel.create({
-        user: userId,
+        userId,
+        userName,
         userAgent
     })
 

@@ -39,8 +39,10 @@ const createUserSessionHandler = async (
     const user = await validatePassword(req.body)
     if (!user) return res.status(401).send("Invalid email or password.")
 
+    console.log("name:", user.name)
+
     // Create session
-    const session = await createSession(user._id, req.get("user-agent") || "")
+    const session = await createSession(user._id, user.name, req.get("user-agent") || "")
 
     // Create access token
     const accessToken = signJwt(
